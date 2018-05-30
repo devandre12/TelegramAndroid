@@ -68,8 +68,13 @@ private:
     bool decryptServerResponse(int64_t keyId, uint8_t *key, uint8_t *data, uint32_t length);
     TLObject *getCurrentHandshakeRequest();
 
+#ifdef PATCH_BY_NEBULAIM
+    const int32_t *defaultPorts = new int32_t[15] {-1, 12345, -1, 12345, -1, 12345, -1, 12345, -1, 12345, -1,  -1, 12345, 12345, -1};
+    const int32_t *defaultPorts8888 = new int32_t[15] {-1, 12345, -1, 12345, -1, 12345, -1, 12345,  -1, 12345, -1, 12345, -1, 12345, -1};
+#else
     const int32_t *defaultPorts = new int32_t[15] {-1, 80, -1, 443, -1, 5222, -1, 443, -1, 80, -1,  -1, 5222, 443, -1};
     const int32_t *defaultPorts8888 = new int32_t[15] {-1, 8888, -1, 443, -1, 5222, -1, 8888,  -1, 80, -1, 5222, -1, 8888, -1};
+#endif
 
     uint32_t datacenterId;
     Connection *genericConnection = nullptr;

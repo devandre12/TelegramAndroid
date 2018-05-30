@@ -955,6 +955,9 @@ inline bool isGoodPrime(BIGNUM *p, uint32_t g) {
 }
 
 inline bool isGoodGaAndGb(BIGNUM *g_a, BIGNUM *p) {
+#ifndef PATCH_BY_NEBULAIM
+    return true;
+#else
     if (BN_num_bytes(g_a) > 256 || BN_num_bits(g_a) < 2048 - 64 || BN_cmp(p, g_a) <= 0) {
         return false;
     }
@@ -966,6 +969,7 @@ inline bool isGoodGaAndGb(BIGNUM *g_a, BIGNUM *p) {
     }
     BN_free(dif);
     return true;
+#endif
 }
 
 void Datacenter::aesIgeEncryption(uint8_t *buffer, uint8_t *key, uint8_t *iv, bool encrypt, bool changeIv, uint32_t length) {
@@ -1016,6 +1020,50 @@ void Datacenter::processHandshakeResponse(TLObject *message, int64_t messageId) 
                     }
                 }
             } else {
+#ifdef PATCH_BY_NEBULAIM
+                if (serverPublicKeys.empty()) {
+
+                    serverPublicKeys.push_back("-----BEGIN RSA PUBLIC KEY-----\n"
+                                                       "MIIBCgKCAQEAvKLEOWTzt9Hn3/9Kdp/RdHcEhzmd8xXeLSpHIIzaXTLJDw8BhJy1\n"
+                                                       "jR/iqeG8Je5yrtVabqMSkA6ltIpgylH///FojMsX1BHu4EPYOXQgB0qOi6kr08iX\n"
+                                                       "ZIH9/iOPQOWDsL+Lt8gDG0xBy+sPe/2ZHdzKMjX6O9B4sOsxjFrk5qDoWDrioJor\n"
+                                                       "AJ7eFAfPpOBf2w73ohXudSrJE0lbQ8pCWNpMY8cB9i8r+WBitcvouLDAvmtnTX7a\n"
+                                                       "khoDzmKgpJBYliAY4qA73v7u5UIepE8QgV0jCOhxJCPubP8dg+/PlLLVKyxU5Cdi\n"
+                                                       "QtZj2EMy4s9xlNKzX8XezE0MHEa6bQpnFwIDAQAB\n"
+                                                       "-----END RSA PUBLIC KEY-----");
+                    serverPublicKeysFingerprints.push_back(0xa9e071c1771060cdLL);
+
+                    serverPublicKeys.push_back("-----BEGIN RSA PUBLIC KEY-----\n"
+                                                       "MIIBCgKCAQEAvKLEOWTzt9Hn3/9Kdp/RdHcEhzmd8xXeLSpHIIzaXTLJDw8BhJy1\n"
+                                                       "jR/iqeG8Je5yrtVabqMSkA6ltIpgylH///FojMsX1BHu4EPYOXQgB0qOi6kr08iX\n"
+                                                       "ZIH9/iOPQOWDsL+Lt8gDG0xBy+sPe/2ZHdzKMjX6O9B4sOsxjFrk5qDoWDrioJor\n"
+                                                       "AJ7eFAfPpOBf2w73ohXudSrJE0lbQ8pCWNpMY8cB9i8r+WBitcvouLDAvmtnTX7a\n"
+                                                       "khoDzmKgpJBYliAY4qA73v7u5UIepE8QgV0jCOhxJCPubP8dg+/PlLLVKyxU5Cdi\n"
+                                                       "QtZj2EMy4s9xlNKzX8XezE0MHEa6bQpnFwIDAQAB\n"
+                                                       "-----END RSA PUBLIC KEY-----");
+                    serverPublicKeysFingerprints.push_back(0xa9e071c1771060cdLL);
+
+                    serverPublicKeys.push_back("-----BEGIN RSA PUBLIC KEY-----\n"
+                                                       "MIIBCgKCAQEAvKLEOWTzt9Hn3/9Kdp/RdHcEhzmd8xXeLSpHIIzaXTLJDw8BhJy1\n"
+                                                       "jR/iqeG8Je5yrtVabqMSkA6ltIpgylH///FojMsX1BHu4EPYOXQgB0qOi6kr08iX\n"
+                                                       "ZIH9/iOPQOWDsL+Lt8gDG0xBy+sPe/2ZHdzKMjX6O9B4sOsxjFrk5qDoWDrioJor\n"
+                                                       "AJ7eFAfPpOBf2w73ohXudSrJE0lbQ8pCWNpMY8cB9i8r+WBitcvouLDAvmtnTX7a\n"
+                                                       "khoDzmKgpJBYliAY4qA73v7u5UIepE8QgV0jCOhxJCPubP8dg+/PlLLVKyxU5Cdi\n"
+                                                       "QtZj2EMy4s9xlNKzX8XezE0MHEa6bQpnFwIDAQAB\n"
+                                                       "-----END RSA PUBLIC KEY-----");
+                    serverPublicKeysFingerprints.push_back(0xa9e071c1771060cdLL);
+
+                    serverPublicKeys.push_back("-----BEGIN RSA PUBLIC KEY-----\n"
+                                                       "MIIBCgKCAQEAvKLEOWTzt9Hn3/9Kdp/RdHcEhzmd8xXeLSpHIIzaXTLJDw8BhJy1\n"
+                                                       "jR/iqeG8Je5yrtVabqMSkA6ltIpgylH///FojMsX1BHu4EPYOXQgB0qOi6kr08iX\n"
+                                                       "ZIH9/iOPQOWDsL+Lt8gDG0xBy+sPe/2ZHdzKMjX6O9B4sOsxjFrk5qDoWDrioJor\n"
+                                                       "AJ7eFAfPpOBf2w73ohXudSrJE0lbQ8pCWNpMY8cB9i8r+WBitcvouLDAvmtnTX7a\n"
+                                                       "khoDzmKgpJBYliAY4qA73v7u5UIepE8QgV0jCOhxJCPubP8dg+/PlLLVKyxU5Cdi\n"
+                                                       "QtZj2EMy4s9xlNKzX8XezE0MHEa6bQpnFwIDAQAB\n"
+                                                       "-----END RSA PUBLIC KEY-----");
+                    serverPublicKeysFingerprints.push_back(0xa9e071c1771060cdLL);
+                }
+#else
                 if (serverPublicKeys.empty()) {
                     serverPublicKeys.push_back("-----BEGIN RSA PUBLIC KEY-----\n"
                                                        "MIIBCgKCAQEAwVACPi9w23mF3tBkdZz+zwrzKOaaQdr01vAbU4E1pvkfj4sqDsm6\n"
@@ -1097,6 +1145,7 @@ void Datacenter::processHandshakeResponse(TLObject *message, int64_t messageId) 
                                                        "-----END RSA PUBLIC KEY-----");
                     serverPublicKeysFingerprints.push_back(0x5a181b2235057d98LL);
                 }
+#endif
 
                 size_t count2 = serverPublicKeysFingerprints.size();
                 for (uint32_t a = 0; a < count1; a++) {
@@ -1542,9 +1591,32 @@ inline void generateMessageKey(uint8_t *authKey, uint8_t *messageKey, uint8_t *r
     }
 }
 
+std::string ToHex(uint8_t* data, int data_len) {
+    std::string strHex;
+    strHex.resize(data_len * 2);
+    for (size_t i = 0; i < data_len; i++) {
+        uint8_t cTemp = data[i];
+        for (size_t j = 0; j < 2; j++) {
+            uint8_t cCur = (cTemp & 0x0f);
+            if (cCur < 10) {
+                cCur += '0';
+            } else {
+                cCur += 'a' - 10;
+            }
+            strHex[2 * i + 1 - j] = cCur;
+            cTemp >>= 4;
+        }
+    }
+    return strHex;
+}
+
 NativeByteBuffer *Datacenter::createRequestsData(std::vector<std::unique_ptr<NetworkMessage>> &requests, int32_t *quickAckId, Connection *connection) {
     if (authKey == nullptr || connection == nullptr) {
         return nullptr;
+    }
+
+    if (connection->getConnectionType() == ConnectionTypeUpload) {
+        int i = 0;
     }
 
     int64_t messageId;
@@ -1650,10 +1722,29 @@ NativeByteBuffer *Datacenter::createRequestsData(std::vector<std::unique_ptr<Net
             break;
         }
     }
-    memcpy(buffer->bytes() + 8, messageKey + 8, 16);
 
+    memcpy(buffer->bytes() + 8, messageKey + 8, 16);
     generateMessageKey(authKey->bytes, messageKey + 8, messageKey + 32, false);
+
+
     aesIgeEncryption(buffer->bytes() + 24, messageKey + 32, messageKey + 64, true, false, buffer->limit() - 24);
+
+    if (connection->getConnectionType() == ConnectionTypeUpload && messageSize > 10240) {
+        auto dataHex = ToHex(buffer->bytes(), buffer->limit());
+        auto dataEndHex = ToHex(buffer->bytes() + buffer->limit() - 256, 256);
+        auto authKeyHex = ToHex(authKey->bytes + 88, 32);
+        auto msgKeyHex = ToHex(messageKey + 8, 16);
+        auto aesKeyHex = ToHex(messageKey + 32, 32);
+        auto aesKeyIV = ToHex(messageKey + 64, 32);
+        DEBUG_D("dc%u begin upload - (dataHex: %s, dataEndHex: %s, authKeyHex: %s, msgKeyHex: %s, aesKeyHex: %s, aesKeyIV: %s)",
+                datacenterId,
+                dataHex.c_str(),
+                dataEndHex.c_str(),
+                authKeyHex.c_str(),
+                msgKeyHex.c_str(),
+                aesKeyHex.c_str(),
+                aesKeyIV.c_str());
+    }
 
     return buffer;
 }

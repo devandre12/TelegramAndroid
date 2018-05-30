@@ -439,19 +439,21 @@ public class ConnectionsManager {
     }
 
     public static void onRequestNewServerIpAndPort(int second) {
-        if (currentTask != null || second != 1 && Math.abs(lastDnsRequestTime - System.currentTimeMillis()) < 10000 || !isNetworkOnline()) {
-            return;
-        }
-        lastDnsRequestTime = System.currentTimeMillis();
-        if (second == 1) {
-            DnsTxtLoadTask task = new DnsTxtLoadTask();
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
-            currentTask = task;
-        } else {
-            DnsLoadTask task = new DnsLoadTask();
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
-            currentTask = task;
-        }
+        // @benqi: Patch by nebulaim
+        return;
+//        if (currentTask != null || second != 1 && Math.abs(lastDnsRequestTime - System.currentTimeMillis()) < 10000 || !isNetworkOnline()) {
+//            return;
+//        }
+//        lastDnsRequestTime = System.currentTimeMillis();
+//        if (second == 1) {
+//            DnsTxtLoadTask task = new DnsTxtLoadTask();
+//            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+//            currentTask = task;
+//        } else {
+//            DnsLoadTask task = new DnsLoadTask();
+//            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
+//            currentTask = task;
+//        }
     }
 
     public static void onBytesReceived(int amount, int networkType) {
